@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: zlv3-app
+    env: node
+    region: singapore
+    plan: free
+    buildCommand: |
+      npm install
+      npm run build
+    startCommand: |
+      npm run start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - fromGroup: env-group-zl
