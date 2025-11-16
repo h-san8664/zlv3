@@ -2,14 +2,26 @@ services:
   - type: web
     name: zlv3-app
     env: node
-    region: singapore
     plan: free
-    buildCommand: |
-      npm install
-      npm run build
-    startCommand: |
-      npm run start
+    buildCommand: "npm install && npm run build"
+    startCommand: "node server.js"
     envVars:
       - key: NODE_ENV
         value: production
-      - fromGroup: env-group-zl
+      - key: PORT
+        value: 3000
+      - key: DATABASE_URL
+        sync: false
+      - key: NEXT_PUBLIC_API_BASE
+        value: https://zlv3.onrender.com
+
+    autoDeploy: true
+    region: singapore  # rekomendasi untuk Indonesia
+
+    # Optional: kamu bisa menambah health check endpoint
+    healthCheckPath: /api/health
+    healthCheckTimeout: 100
+
+    # Optional: Menjaga Node versi minimal
+    runtime:
+      nodeVersion: 18
